@@ -72,7 +72,7 @@ const json = `{
     ```js
     {
         "block": "form",
-        "content" [
+        "content": [
             {
                 "block": "form",
                 "elem": "label",
