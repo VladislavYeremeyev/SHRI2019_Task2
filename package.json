@@ -1,0 +1,43 @@
+{
+  "name": "shri2019_task2",
+  "version": "1.0.0",
+  "description": "The entrance task of Yandex Web Development School.",
+  "main": "index.js",
+  "scripts": {
+    "kek": "tsc -p ./ && node out/index.js",
+    "compile-tsc": "tsc -p ./",
+    "build": "npm run compile-tsc && gulp build",
+    "prettier": "prettier --config .prettierrc.json --write src/**/*.ts",
+    "lint": "tslint -c tslint.json 'src/**/*.ts' 'tests/**/*.spec.ts' --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VladislavYeremeyev/SHRI2019_Task2.git"
+  },
+  "author": "Vladislav Yeremeyev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VladislavYeremeyev/SHRI2019_Task2/issues"
+  },
+  "homepage": "https://github.com/VladislavYeremeyev/SHRI2019_Task2#readme",
+  "devDependencies": {
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^10.12.21",
+    "browserify": "^16.3.0",
+    "gulp-uglify-es": "^1.0.4",
+    "prettier": "^1.18.2",
+    "tslint": "^5.12.1",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.5",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-typescript": "^5.0.1",
+    "json-to-ast": "^2.1.0"
+  }
+}
