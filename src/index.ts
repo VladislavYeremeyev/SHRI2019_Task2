@@ -4,6 +4,7 @@ import { checkContentItemElementRules } from "./formContentItemElementCheck";
 import { checkFooterRules } from "./formFooterCheck";
 import { checkHeaderRules } from "./formHeaderCheck";
 import { checkFormContentSize } from "./formReferenceSizeCheck";
+import { checkTextHeaderRules } from "./textHeadersCheck";
 import { ILinterProblem, RuleKeys } from "./types";
 import { getLinterErrorData, isBlock } from "./utils";
 
@@ -35,13 +36,13 @@ function walk(
   }
 }
 
-function makeLint<TProblemKey>(
+function makeLint(
   jsonString: string,
   validateObjectFunction: (
     property: jsonToAst.AstObject
-  ) => ILinterProblem<TProblemKey>[]
-): ILinterProblem<TProblemKey>[] {
-  let errors: ILinterProblem<TProblemKey>[] = [];
+  ) => ILinterProblem<RuleKeys>[]
+): ILinterProblem<RuleKeys>[] {
+  let errors: ILinterProblem<RuleKeys>[] = [];
   const ast: jsonToAst.AstJsonEntity | undefined = parseJson(jsonString);
 
   const cbObj = (obj: jsonToAst.AstObject) => {
@@ -49,13 +50,19 @@ function makeLint<TProblemKey>(
   };
 
   if (ast) {
+    errors = [
+      ...errors,
+      ...checkTextHeaderRules(ast, undefined, false, 1).headerErrors,
+    ];
     walk(ast, cbObj);
   }
 
   return errors;
 }
 
-const validateObject = (obj: jsonToAst.AstObject): any[] => {
+const validateObject = (
+  obj: jsonToAst.AstObject
+): ILinterProblem<RuleKeys>[] => {
   if (isBlock(obj, "form")) {
     const formContent = obj.children.find((p) => p.key.value === "content");
     if (typeof formContent !== "undefined") {
@@ -93,33 +100,34 @@ const validateObject = (obj: jsonToAst.AstObject): any[] => {
   return [];
 };
 
-const json = `{
-  "block": "form",
-  "content": {
-      "block": "form",
-      "elem": "content",
-      "content": [
-          {
-              "block": "form",
-              "elem":  "content-item",
-              "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xxl" } }],
-              "mods": { "indent-b": "xl" },
-              "content": { "block": "input", "mods": { "size": "l" } }
-          },
-          {
-              "block": "form",
-              "elem":  "content-item",
-              "content": { "block": "input", "mods": { "size": "l" } },
-              "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }]
-          },
-          {
-            "block": "form",
-            "elem":  "content-item",
-            "content": { "block": "input", "mods": { "size": "xl" } }
-          }
-      ]
-    }
-}`;
+// const json = `{
+//   "block": "form",
+//   "content": {
+//       "block": "form",
+//       "elem": "content",
+//       "content": [
+//           {
+//               "block": "form",
+//               "elem":  "content-item",
+//               "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
+//               "content": { "block": "input", "mods": { "size": "l" } }
+//           },
+//           {
+//               "block": "form",
+//               "elem":  "content-item",
+//               "content": { "block": "input", "mods": { "size": "l" } },
+//               "mix": [{
+//                 "block": "form",
+//                 "elem":  "content-item",
+//                 "mix": [{
+//                   "block": "form",
+//                   "elem": "content"}],
+//                 "content": { "block": "input", "mods": { "size": "l" } }
+//             }]
+//           }
+//       ]
+//   }
+// }`;
 
 function lint(jsonString: string): ILinterProblem<RuleKeys>[] | [] {
   return makeLint(jsonString, validateObject);
@@ -130,4 +138,4 @@ const globalScope = (typeof window !== "undefined"
   : false || global) as any;
 globalScope.lint = lint;
 
-console.log(lint(json));
+// console.log(lint(json));

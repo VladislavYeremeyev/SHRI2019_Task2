@@ -6,6 +6,7 @@ const formContentItemElementCheck_1 = require("./formContentItemElementCheck");
 const formFooterCheck_1 = require("./formFooterCheck");
 const formHeaderCheck_1 = require("./formHeaderCheck");
 const formReferenceSizeCheck_1 = require("./formReferenceSizeCheck");
+const textHeadersCheck_1 = require("./textHeadersCheck");
 const utils_1 = require("./utils");
 function parseJson(jsonString) {
     try {
@@ -35,6 +36,10 @@ function makeLint(jsonString, validateObjectFunction) {
         errors = [...errors, ...validateObjectFunction(obj)];
     };
     if (ast) {
+        errors = [
+            ...errors,
+            ...textHeadersCheck_1.checkTextHeaderRules(ast, undefined, false, 1).headerErrors,
+        ];
         walk(ast, cbObj);
     }
     return errors;
@@ -71,33 +76,34 @@ const validateObject = (obj) => {
     // }
     return [];
 };
-const json = `{
-  "block": "form",
-  "content": {
-      "block": "form",
-      "elem": "content",
-      "content": [
-          {
-              "block": "form",
-              "elem":  "content-item",
-              "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xxl" } }],
-              "mods": { "indent-b": "xl" },
-              "content": { "block": "input", "mods": { "size": "l" } }
-          },
-          {
-              "block": "form",
-              "elem":  "content-item",
-              "content": { "block": "input", "mods": { "size": "l" } },
-              "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }]
-          },
-          {
-            "block": "form",
-            "elem":  "content-item",
-            "content": { "block": "input", "mods": { "size": "xl" } }
-          }
-      ]
-    }
-}`;
+// const json = `{
+//   "block": "form",
+//   "content": {
+//       "block": "form",
+//       "elem": "content",
+//       "content": [
+//           {
+//               "block": "form",
+//               "elem":  "content-item",
+//               "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
+//               "content": { "block": "input", "mods": { "size": "l" } }
+//           },
+//           {
+//               "block": "form",
+//               "elem":  "content-item",
+//               "content": { "block": "input", "mods": { "size": "l" } },
+//               "mix": [{
+//                 "block": "form",
+//                 "elem":  "content-item",
+//                 "mix": [{
+//                   "block": "form",
+//                   "elem": "content"}],
+//                 "content": { "block": "input", "mods": { "size": "l" } }
+//             }]
+//           }
+//       ]
+//   }
+// }`;
 function lint(jsonString) {
     return makeLint(jsonString, validateObject);
 }
@@ -105,5 +111,5 @@ const globalScope = (typeof window !== "undefined"
     ? window
     : false || global);
 globalScope.lint = lint;
-console.log(lint(json));
+// console.log(lint(json));
 //# sourceMappingURL=index.js.map
