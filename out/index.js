@@ -94,20 +94,41 @@ const json = `{
   "block": "form",
   "content": [
     {
-        "block": "form",
-        "elem": "label",
-        "content": {
-            "block": "text",
-            "mods": { "size": "l" }
+      "block": "form",
+      "elem": "content",
+      "mix": [{ "block": "form", "elem": "item", "mods": {  "space-h": "xl" } }, { "block": "form", "elem": "item", "mods": {  "space-v": "xxl" } }],
+      "content": [
+          {
+              "block": "form",
+              "elem":  "content-item",
+              "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
+              "content": { "block": "input", "mods": { "size": "l" } }
+          },
+          {
+              "block": "form",
+              "elem":  "content-item",
+              "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
+              "content": { "block": "input", "mods": { "size": "l" } }
+          },
+          {
+              "block": "form",
+              "elem":  "content-item",
+              "content": { "block": "input", "mods": { "size": "l" } }
+          }
+      ]
+  },
+  {
+    "block": "form",
+    "elem": "content",
+    "mix": [{ "block": "form", "elem": "item", "mods": {  "space-h": "xl" } }, { "block": "form", "elem": "item", "mods": {  "space-v": "xxl" } }],
+    "content": [
+        {
+            "block": "form",
+            "elem":  "content-item",
+            "content": { "block": "input", "mods": { "size": "l" } }
         }
-    },
-    {
-        "block": "input"
-    },
-    {
-      "block": "input"
-    }
-  ]
+    ]
+  }]
 }`;
 function lint(jsonString) {
     return makeLint(jsonString, validateObject);
