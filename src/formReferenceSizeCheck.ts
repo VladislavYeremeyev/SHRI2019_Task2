@@ -3,6 +3,7 @@ import { ILinterProblem, IResult, RuleKeys, textSizeValues } from "./types";
 import {
   getInnerEntities,
   getLinterErrorData,
+  getMixedObject,
   getModsError,
   isBlock,
   isElement,
@@ -31,6 +32,45 @@ const getSizeEqualData = (
       );
     }
     result.newReferenceSize = newReferenceValue;
+  } else if (elem.children.find((p) => p.key.value === "mix")) {
+    const inputMix = getMixedObject(elem, "input");
+    const buttonMix = getMixedObject(elem, "button");
+    const labelMix = getMixedObject(elem, "form", "label");
+    [inputMix, buttonMix].forEach((mix) => {
+      if (typeof mix !== "undefined") {
+        const { newReferenceValue, modErrorObject } = getModsError(
+          mix,
+          "size",
+          result.newReferenceSize,
+          textSizeValues
+        );
+        if (typeof modErrorObject !== "undefined") {
+          result.errors.push(
+            getLinterErrorData("FormElementsSizeShouldBeEqual", formBlock.loc)
+          );
+        }
+        result.newReferenceSize = newReferenceValue;
+      }
+    });
+    if (typeof labelMix !== "undefined") {
+      const content = elem.children.find((p) => p.key.value === "content");
+      if (typeof content !== "undefined") {
+        getInnerEntities(content.value, "text").forEach((textBlock) => {
+          const { newReferenceValue, modErrorObject } = getModsError(
+            textBlock,
+            "size",
+            result.newReferenceSize,
+            textSizeValues
+          );
+          if (typeof modErrorObject !== "undefined") {
+            result.errors.push(
+              getLinterErrorData("FormElementsSizeShouldBeEqual", formBlock.loc)
+            );
+          }
+          result.newReferenceSize = newReferenceValue;
+        });
+      }
+    }
   } else if (isElement(elem, "form", "label")) {
     const content = elem.children.find((p) => p.key.value === "content");
     if (typeof content !== "undefined") {

@@ -55,6 +55,8 @@ function makeLint(
       ...checkTextHeaderRules(ast, undefined, false, 1).headerErrors,
     ];
     walk(ast, cbObj);
+  } else {
+    console.warn("Invalid JSON");
   }
 
   return errors;
@@ -103,29 +105,25 @@ const validateObject = (
 // const json = `{
 //   "block": "form",
 //   "content": {
-//       "block": "form",
-//       "elem": "content",
-//       "content": [
+//     "block": "form",
+//     "elem": "content",
+//     "mix": [{ "block": "form", "elem": "item", "mods": { "space-h": "xl", "space-v": "xxl" } }],
+//     "content": [
+//       {
+//         "block": "form",
+//         "elem":  "content-item",
+//         "mix": [
 //           {
-//               "block": "form",
-//               "elem":  "content-item",
-//               "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
-//               "content": { "block": "input", "mods": { "size": "l" } }
-//           },
-//           {
-//               "block": "form",
-//               "elem":  "content-item",
-//               "content": { "block": "input", "mods": { "size": "l" } },
-//               "mix": [{
-//                 "block": "form",
-//                 "elem":  "content-item",
-//                 "mix": [{
-//                   "block": "form",
-//                   "elem": "content"}],
-//                 "content": { "block": "input", "mods": { "size": "l" } }
-//             }]
+//             "block": "form",
+//             "elem": "label"
 //           }
-//       ]
+//         ],
+//         "content": {
+//           "block": "text",
+//           "mods": { "size": "xl" }
+//         }
+//       }
+//     ]
 //   }
 // }`;
 

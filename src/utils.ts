@@ -194,8 +194,10 @@ export const getInnerEntities = (
     case "Object":
       if (
         (typeof elementName === "undefined" && isBlock(elem, blockName)) ||
-        (typeof elementName !== "undefined" &&
-          isElement(elem, blockName, elementName))
+        typeof getMixedObject(elem, blockName) !== "undefined" ||
+        ((typeof elementName !== "undefined" &&
+          isElement(elem, blockName, elementName)) ||
+          typeof getMixedObject(elem, blockName, elementName) !== "undefined")
       ) {
         innerTextBlocks = [...innerTextBlocks, elem];
       }

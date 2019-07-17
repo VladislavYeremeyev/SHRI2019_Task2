@@ -135,8 +135,10 @@ exports.getInnerEntities = (elem, blockName, elementName) => {
             break;
         case "Object":
             if ((typeof elementName === "undefined" && exports.isBlock(elem, blockName)) ||
-                (typeof elementName !== "undefined" &&
-                    exports.isElement(elem, blockName, elementName))) {
+                typeof exports.getMixedObject(elem, blockName) !== "undefined" ||
+                ((typeof elementName !== "undefined" &&
+                    exports.isElement(elem, blockName, elementName)) ||
+                    typeof exports.getMixedObject(elem, blockName, elementName) !== "undefined")) {
                 innerTextBlocks = [...innerTextBlocks, elem];
             }
             const innerContent = elem.children.find((p) => p.key.value === "content");

@@ -14,6 +14,32 @@ const getSizeEqualData = (formBlock, elem, referenceSize) => {
         }
         result.newReferenceSize = newReferenceValue;
     }
+    else if (elem.children.find((p) => p.key.value === "mix")) {
+        const inputMix = utils_1.getMixedObject(elem, "input");
+        const buttonMix = utils_1.getMixedObject(elem, "button");
+        const labelMix = utils_1.getMixedObject(elem, "form", "label");
+        [inputMix, buttonMix].forEach((mix) => {
+            if (typeof mix !== "undefined") {
+                const { newReferenceValue, modErrorObject } = utils_1.getModsError(mix, "size", result.newReferenceSize, types_1.textSizeValues);
+                if (typeof modErrorObject !== "undefined") {
+                    result.errors.push(utils_1.getLinterErrorData("FormElementsSizeShouldBeEqual", formBlock.loc));
+                }
+                result.newReferenceSize = newReferenceValue;
+            }
+        });
+        if (typeof labelMix !== "undefined") {
+            const content = elem.children.find((p) => p.key.value === "content");
+            if (typeof content !== "undefined") {
+                utils_1.getInnerEntities(content.value, "text").forEach((textBlock) => {
+                    const { newReferenceValue, modErrorObject } = utils_1.getModsError(textBlock, "size", result.newReferenceSize, types_1.textSizeValues);
+                    if (typeof modErrorObject !== "undefined") {
+                        result.errors.push(utils_1.getLinterErrorData("FormElementsSizeShouldBeEqual", formBlock.loc));
+                    }
+                    result.newReferenceSize = newReferenceValue;
+                });
+            }
+        }
+    }
     else if (utils_1.isElement(elem, "form", "label")) {
         const content = elem.children.find((p) => p.key.value === "content");
         if (typeof content !== "undefined") {
