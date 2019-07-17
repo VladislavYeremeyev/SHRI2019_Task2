@@ -114,26 +114,25 @@ const validateObject = (
 //   ]
 // }`;
 
-// const json = `{
-//   "block": "form",
-//   "content": [
-//     {
-//         "block": "form",
-//         "elem": "label",
-//         "content": {
-//             "block": "text",
-//             "mods": { "size": "xxl" }
-//         }
-//     },
-//     {
-//         "block": "input"
-//     },
-//     {
-//       "block": "input",
-//       "mods": { "size": "xxl" }
-//     }
-//   ]
-// }`;
+const json = `{
+  "block": "form",
+  "content": [
+    {
+        "block": "form",
+        "elem": "label",
+        "content": {
+            "block": "text",
+            "mods": { "size": "l" }
+        }
+    },
+    {
+        "block": "input"
+    },
+    {
+      "block": "input"
+    }
+  ]
+}`;
 
 function lint(jsonString: string): ILinterProblem<RuleKeys>[] | [] {
   return makeLint(jsonString, validateObject);
@@ -144,4 +143,4 @@ const globalScope = (typeof window !== "undefined"
   : false || global) as any;
 globalScope.lint = lint;
 
-// console.log(lint(json));
+console.log(lint(json));

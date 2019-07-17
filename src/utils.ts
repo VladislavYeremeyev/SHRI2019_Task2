@@ -152,6 +152,8 @@ export const getModsError = (
     } else {
       modErrorObject = elem;
     }
+  } else {
+    modErrorObject = elem;
   }
 
   return { newReferenceValue, modErrorObject };

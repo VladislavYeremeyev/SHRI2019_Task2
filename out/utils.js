@@ -107,6 +107,9 @@ exports.getModsError = (elem, modName, referenceValue, expectedValues, reference
             modErrorObject = elem;
         }
     }
+    else {
+        modErrorObject = elem;
+    }
     return { newReferenceValue, modErrorObject };
 };
 exports.getInnerEntities = (elem, blockName, elementName) => {

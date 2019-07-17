@@ -90,26 +90,25 @@ const validateObject = (obj) => {
 //   }
 //   ]
 // }`;
-// const json = `{
-//   "block": "form",
-//   "content": [
-//     {
-//         "block": "form",
-//         "elem": "label",
-//         "content": {
-//             "block": "text",
-//             "mods": { "size": "xxl" }
-//         }
-//     },
-//     {
-//         "block": "input"
-//     },
-//     {
-//       "block": "input",
-//       "mods": { "size": "xxl" }
-//     }
-//   ]
-// }`;
+const json = `{
+  "block": "form",
+  "content": [
+    {
+        "block": "form",
+        "elem": "label",
+        "content": {
+            "block": "text",
+            "mods": { "size": "l" }
+        }
+    },
+    {
+        "block": "input"
+    },
+    {
+      "block": "input"
+    }
+  ]
+}`;
 function lint(jsonString) {
     return makeLint(jsonString, validateObject);
 }
@@ -117,5 +116,5 @@ const globalScope = (typeof window !== "undefined"
     ? window
     : false || global);
 globalScope.lint = lint;
-// console.log(lint(json));
+console.log(lint(json));
 //# sourceMappingURL=index.js.map
