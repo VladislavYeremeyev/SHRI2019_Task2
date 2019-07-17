@@ -39,6 +39,7 @@ export function checkTextHeaderRules<TProblemKey>(
                   } else {
                     h1Found = true;
                   }
+                  prevElem = elem;
                   break;
                 case "h2":
                   if (maxLevel > 2) {

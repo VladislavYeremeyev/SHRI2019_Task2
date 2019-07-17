@@ -106,6 +106,9 @@ export function checkFormContentSize(
     case "Array":
       formContent.children.forEach((elem: jsonToAst.AstJsonEntity) => {
         if (elem.type === "Object") {
+          if (errors.length === 1) {
+            return { errors, referenceSize };
+          }
           const checkData = getSizeEqualData(formBlock, elem, referenceSize);
           errors = [...errors, ...checkData.errors];
           if (
@@ -124,6 +127,9 @@ export function checkFormContentSize(
               innerContent.value,
               referenceSize
             );
+            if (errors.length === 1) {
+              return { errors, referenceSize };
+            }
             errors = [...errors, ...data.errors];
             referenceSize = data.referenceSize;
           }
@@ -131,6 +137,9 @@ export function checkFormContentSize(
       });
       break;
     case "Object":
+      if (errors.length === 1) {
+        return { errors, referenceSize };
+      }
       const checkData = getSizeEqualData(formBlock, formContent, referenceSize);
       errors = [...errors, ...checkData.errors];
       if (
@@ -149,6 +158,9 @@ export function checkFormContentSize(
           innerContent.value,
           referenceSize
         );
+        if (errors.length === 1) {
+          return { errors, referenceSize };
+        }
         errors = [...errors, ...data.errors];
         referenceSize = data.referenceSize;
       }

@@ -28,6 +28,7 @@ function checkTextHeaderRules(content, prevElement, isH1Found, maxAvailableHeade
                                     else {
                                         h1Found = true;
                                     }
+                                    prevElem = elem;
                                     break;
                                 case "h2":
                                     if (maxLevel > 2) {

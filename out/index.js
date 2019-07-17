@@ -68,41 +68,48 @@ const validateObject = (obj) => {
         }
         return [];
     }
-    // if (isBlock(obj, "text")) {
-    //   const mods = obj.children.find(p => p.key.value === "mods");
-    //   if (typeof mods !== "undefined") {
-    //     const modValue = getModValue(mods.value, "type");
-    //     if (modValue === "h1") {
-    //       isSingleH1(true)
-    //     }
-    //   }
-    // }
     return [];
 };
 // const json = `{
-//   "block": "form",
-//   "content": {
-//     "block": "form",
-//     "elem": "content",
-//     "mix": [{ "block": "form", "elem": "item", "mods": { "space-h": "xl", "space-v": "xxl" } }],
-//     "content": [
-//       {
-//         "block": "form",
-//         "elem":  "content-item",
-//         "mix": [
-//           {
-//             "block": "form",
-//             "elem": "label"
-//           }
-//         ],
-//         "content": {
-//           "block": "text",
-//           "mods": { "size": "xl" }
-//         }
-//       }
+//   "block":"tree",
+//   "content":[
+//   {"block":"text", "mods":{"type":"h1"}},
+//   {"block":"branch1",
+//     "content":[
+//       {"block":"text", "mods":{"type":"h2"}},
+//       {"block":"text","mods":{"type":"h3"}},
+//       {"block":"wrapper","content":{"block":"text","mods":{"type":"h3"}}}
+//     ]
+//   },
+//   {"block":"branch2",
+//     "content":[
+//       {"block":"wrapper","content":[{"block":"text","mods":{"type":"h3"}}, {"block":"text","mods":{"type":"h1"}}]},
+//       {"block":"text","mods":{"type":"h2"}},
+//       {"block":"text","mods":{"type":"h3"}}
 //     ]
 //   }
+//   ]
 // }`;
+const json = `{
+  "block": "form",
+  "content": [
+    {
+        "block": "form",
+        "elem": "label",
+        "content": {
+            "block": "text",
+            "mods": { "size": "xxl" }
+        }
+    },
+    {
+        "block": "input"
+    },
+    {
+      "block": "input",
+      "mods": { "size": "xxl" }
+    }
+  ]
+}`;
 function lint(jsonString) {
     return makeLint(jsonString, validateObject);
 }
@@ -110,5 +117,5 @@ const globalScope = (typeof window !== "undefined"
     ? window
     : false || global);
 globalScope.lint = lint;
-// console.log(lint(json));
+console.log(lint(json));
 //# sourceMappingURL=index.js.map

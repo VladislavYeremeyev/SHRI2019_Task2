@@ -61,6 +61,9 @@ function checkFormContentSize(formBlock, formContent, refSize) {
         case "Array":
             formContent.children.forEach((elem) => {
                 if (elem.type === "Object") {
+                    if (errors.length === 1) {
+                        return { errors, referenceSize };
+                    }
                     const checkData = getSizeEqualData(formBlock, elem, referenceSize);
                     errors = [...errors, ...checkData.errors];
                     if (typeof referenceSize === "undefined" &&
@@ -70,6 +73,9 @@ function checkFormContentSize(formBlock, formContent, refSize) {
                     const innerContent = elem.children.find((p) => p.key.value === "content");
                     if (typeof innerContent !== "undefined") {
                         const data = checkFormContentSize(formBlock, innerContent.value, referenceSize);
+                        if (errors.length === 1) {
+                            return { errors, referenceSize };
+                        }
                         errors = [...errors, ...data.errors];
                         referenceSize = data.referenceSize;
                     }
@@ -77,6 +83,9 @@ function checkFormContentSize(formBlock, formContent, refSize) {
             });
             break;
         case "Object":
+            if (errors.length === 1) {
+                return { errors, referenceSize };
+            }
             const checkData = getSizeEqualData(formBlock, formContent, referenceSize);
             errors = [...errors, ...checkData.errors];
             if (typeof referenceSize === "undefined" &&
@@ -86,6 +95,9 @@ function checkFormContentSize(formBlock, formContent, refSize) {
             const innerContent = formContent.children.find((p) => p.key.value === "content");
             if (typeof innerContent !== "undefined") {
                 const data = checkFormContentSize(formBlock, innerContent.value, referenceSize);
+                if (errors.length === 1) {
+                    return { errors, referenceSize };
+                }
                 errors = [...errors, ...data.errors];
                 referenceSize = data.referenceSize;
             }
