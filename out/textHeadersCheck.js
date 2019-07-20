@@ -9,6 +9,7 @@ function checkTextHeaderRules(content, prevElement, isH1Found, maxAvailableHeade
     switch (content.type) {
         case "Array":
             const initialMaxValue = maxAvailableHeaderLevel;
+            console.log("init val", initialMaxValue);
             content.children.forEach((elem) => {
                 if (elem.type === "Object") {
                     if (utils_1.isBlock(elem, "text")) {

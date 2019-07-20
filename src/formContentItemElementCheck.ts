@@ -19,7 +19,8 @@ export function checkContentItemElementRules(
       const contentItemElements = getInnerEntities(
         elem,
         "form",
-        "content-item"
+        "content-item",
+        true
       );
       if (typeof contentItemElements !== "undefined") {
         contentItemElements.forEach((elem, i) => {

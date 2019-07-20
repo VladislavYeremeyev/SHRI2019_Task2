@@ -7,7 +7,7 @@ function checkContentItemElementRules(formContent, referenceSize) {
     const contentItems = utils_1.getInnerEntities(formContent, "form", "content");
     if (typeof contentItems !== "undefined") {
         contentItems.forEach((elem) => {
-            const contentItemElements = utils_1.getInnerEntities(elem, "form", "content-item");
+            const contentItemElements = utils_1.getInnerEntities(elem, "form", "content-item", true);
             if (typeof contentItemElements !== "undefined") {
                 contentItemElements.forEach((elem, i) => {
                     const mixObj = utils_1.getMixedObject(elem, "form", "item", ["indent-b"]);

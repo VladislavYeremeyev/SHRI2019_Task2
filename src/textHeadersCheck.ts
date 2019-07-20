@@ -16,6 +16,7 @@ export function checkTextHeaderRules<TProblemKey>(
   switch (content.type) {
     case "Array":
       const initialMaxValue = maxAvailableHeaderLevel;
+      console.log("init val", initialMaxValue);
       content.children.forEach((elem: jsonToAst.AstJsonEntity) => {
         if (elem.type === "Object") {
           if (isBlock(elem, "text")) {
