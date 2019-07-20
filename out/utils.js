@@ -112,7 +112,7 @@ exports.getModsError = (elem, modName, referenceValue, expectedValues, reference
     }
     return { newReferenceValue, modErrorObject };
 };
-exports.getInnerEntities = (elem, blockName, elementName, firstLevelOnly) => {
+exports.getInnerEntities = (elem, blockName, elementName) => {
     let innerTextBlocks = [];
     switch (elem.type) {
         case "Array":
@@ -126,14 +126,12 @@ exports.getInnerEntities = (elem, blockName, elementName, firstLevelOnly) => {
                                 "undefined")) {
                         innerTextBlocks = [...innerTextBlocks, child];
                     }
-                    if (typeof firstLevelOnly === "undefined" || !firstLevelOnly) {
-                        const innerContent = child.children.find((p) => p.key.value === "content");
-                        if (typeof innerContent !== "undefined") {
-                            innerTextBlocks = [
-                                ...innerTextBlocks,
-                                ...exports.getInnerEntities(innerContent.value, blockName, elementName),
-                            ];
-                        }
+                    const innerContent = child.children.find((p) => p.key.value === "content");
+                    if (typeof innerContent !== "undefined") {
+                        innerTextBlocks = [
+                            ...innerTextBlocks,
+                            ...exports.getInnerEntities(innerContent.value, blockName, elementName),
+                        ];
                     }
                 }
             });
@@ -146,14 +144,12 @@ exports.getInnerEntities = (elem, blockName, elementName, firstLevelOnly) => {
                     typeof exports.getMixedObject(elem, blockName, elementName) !== "undefined")) {
                 innerTextBlocks = [...innerTextBlocks, elem];
             }
-            if (typeof firstLevelOnly === "undefined" || !firstLevelOnly) {
-                const innerContent = elem.children.find((p) => p.key.value === "content");
-                if (typeof innerContent !== "undefined") {
-                    innerTextBlocks = [
-                        ...innerTextBlocks,
-                        ...exports.getInnerEntities(innerContent.value, blockName, elementName),
-                    ];
-                }
+            const innerContent = elem.children.find((p) => p.key.value === "content");
+            if (typeof innerContent !== "undefined") {
+                innerTextBlocks = [
+                    ...innerTextBlocks,
+                    ...exports.getInnerEntities(innerContent.value, blockName, elementName),
+                ];
             }
     }
     return innerTextBlocks;

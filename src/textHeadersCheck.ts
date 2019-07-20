@@ -2,7 +2,7 @@ import jsonToAst = require("json-to-ast");
 import { ILinterProblem, RuleKeys } from "./types";
 import { getLinterErrorData, getModValue, isBlock } from "./utils";
 
-export function checkTextHeaderRules<TProblemKey>(
+export function checkTextHeaderRules(
   content: jsonToAst.AstJsonEntity,
   prevElement: jsonToAst.AstObject | undefined,
   isH1Found: boolean,
