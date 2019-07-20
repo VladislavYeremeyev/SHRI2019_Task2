@@ -181,7 +181,7 @@ export const getInnerEntities = (
           ) {
             innerTextBlocks = [...innerTextBlocks, child];
           }
-          if (!firstLevelOnly) {
+          if (typeof firstLevelOnly === "undefined" || !firstLevelOnly) {
             const innerContent = child.children.find(
               (p) => p.key.value === "content"
             );
@@ -206,7 +206,7 @@ export const getInnerEntities = (
         innerTextBlocks = [...innerTextBlocks, elem];
       }
 
-      if (!firstLevelOnly) {
+      if (typeof firstLevelOnly === "undefined" || !firstLevelOnly) {
         const innerContent = elem.children.find((p) => p.key.value === "content");
         if (typeof innerContent !== "undefined") {
           innerTextBlocks = [
