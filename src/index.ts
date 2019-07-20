@@ -114,62 +114,62 @@ const validateObject = (
 //   ]
 // }`;
 
-const json = `
-  [
-    {
-      "block": "text",
-      "mods": { "type": "h2" }
-    },
-    {
-      "block": "mock",
-      "content": {
-        "block": "text",
-        "mods": { "type": "h1" }
-      }
-    }
-  ]
-`;
-
 // const json = `
-// {
-//   "block": "form",
-//   "content": {
-//       "block": "form",
-//       "elem": "content",
-//       "mix": [{ "block": "form", "elem": "item", "mods": { "space-h": "xl", "space-v": "xxl"} }],
-//       "content": [
-//           {
-//             "block": "form",
-//             "elem": "content",
-//             "mix": [{ "block": "form", "elem": "item", "mods": { "space-h": "xl", "space-v": "xxl"} }],
-//             "content": [
-//               {
-//                 "block": "form",
-//                 "elem":  "content-item",
-//                 "content": { "block": "input", "mods": { "size": "l" } }
-//               }
-//             ]
-//           },
-//           {
-//               "block": "form",
-//               "elem":  "content-item",
-//               "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
-//               "content": { "block": "input", "mods": { "size": "l" } }
-//           },
-//           {
-//               "block": "form",
-//               "elem":  "content-item",
-//               "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
-//               "content": { "block": "input", "mods": { "size": "l" } }
-//           },
-//           {
-//               "block": "form",
-//               "elem":  "content-item",
-//               "content": { "block": "input", "mods": { "size": "l" } }
-//           }
-//       ]
-//   }
-// }`;
+//   [
+//     {
+//       "block": "text",
+//       "mods": { "type": "h2" }
+//     },
+//     {
+//       "block": "mock",
+//       "content": {
+//         "block": "text",
+//         "mods": { "type": "h1" }
+//       }
+//     }
+//   ]
+// `;
+
+const json = `
+{
+  "block": "form",
+  "content": {
+      "block": "form",
+      "elem": "content",
+      "mix": [{ "block": "form", "elem": "item", "mods": { "space-h": "xl", "space-v": "xxl"} }],
+      "content": [
+          {
+            "block": "form",
+            "elem": "content",
+            "mix": [{ "block": "form", "elem": "item", "mods": { "space-h": "xl", "space-v": "xxl"} }],
+            "content": [
+              {
+                "block": "form",
+                "elem":  "content-item",
+                "content": { "block": "input", "mods": { "size": "l" } }
+              }
+            ]
+          },
+          {
+              "block": "form",
+              "elem":  "content-item",
+              "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
+              "content": { "block": "input", "mods": { "size": "l" } }
+          },
+          {
+              "block": "form",
+              "elem":  "content-item",
+              "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
+              "content": { "block": "input", "mods": { "size": "l" } }
+          },
+          {
+              "block": "form",
+              "elem":  "content-item",
+              "content": { "block": "input", "mods": { "size": "l" } }
+          }
+      ]
+  }
+}`;
 // const json = `{
 //   "block": "form",
 //   "content": [{

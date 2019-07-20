@@ -126,7 +126,7 @@ exports.getInnerEntities = (elem, blockName, elementName, firstLevelOnly) => {
                                 "undefined")) {
                         innerTextBlocks = [...innerTextBlocks, child];
                     }
-                    if (!firstLevelOnly) {
+                    if (typeof firstLevelOnly === "undefined" || !firstLevelOnly) {
                         const innerContent = child.children.find((p) => p.key.value === "content");
                         if (typeof innerContent !== "undefined") {
                             innerTextBlocks = [
@@ -146,7 +146,7 @@ exports.getInnerEntities = (elem, blockName, elementName, firstLevelOnly) => {
                     typeof exports.getMixedObject(elem, blockName, elementName) !== "undefined")) {
                 innerTextBlocks = [...innerTextBlocks, elem];
             }
-            if (!firstLevelOnly) {
+            if (typeof firstLevelOnly === "undefined" || !firstLevelOnly) {
                 const innerContent = elem.children.find((p) => p.key.value === "content");
                 if (typeof innerContent !== "undefined") {
                     innerTextBlocks = [
