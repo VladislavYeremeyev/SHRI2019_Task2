@@ -105,8 +105,7 @@ const validateObject = (obj) => {
 //     }
 //   ]
 // `;
-const json = `
-{
+const json = `{
   "block": "form",
   "content": {
       "block": "form",
@@ -124,18 +123,6 @@ const json = `
                 "content": { "block": "input", "mods": { "size": "l" } }
               }
             ]
-          },
-          {
-              "block": "form",
-              "elem":  "content-item",
-              "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
-              "content": { "block": "input", "mods": { "size": "l" } }
-          },
-          {
-              "block": "form",
-              "elem":  "content-item",
-              "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
-              "content": { "block": "input", "mods": { "size": "l" } }
           },
           {
               "block": "form",
