@@ -10,7 +10,6 @@ function checkTextHeaderRules(content, prevElement, isH1Found, maxAvailableHeade
     };
     switch (content.type) {
         case "Array":
-            // const initialMaxValue = maxAvailableHeaderLevel;
             content.children.forEach((elem) => {
                 if (elem.type === "Object") {
                     if (utils_1.isBlock(elem, "text")) {
@@ -53,7 +52,10 @@ function checkTextHeaderRules(content, prevElement, isH1Found, maxAvailableHeade
                     const innerContent = elem.children.find((p) => p.key.value === "content");
                     if (typeof innerContent !== "undefined") {
                         const data = checkTextHeaderRules(innerContent.value, elem, result.h1Flag, result.maxLevelValue);
-                        result.headerErrors = [...result.headerErrors, ...data.headerErrors];
+                        result.headerErrors = [
+                            ...result.headerErrors,
+                            ...data.headerErrors,
+                        ];
                         result.maxLevelValue = data.maxLevelValue;
                         result.previousElement = data.previousElement;
                         result.h1Flag = data.h1Flag;

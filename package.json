@@ -4,7 +4,6 @@
   "description": "The entrance task of Yandex Web Development School.",
   "main": "index.js",
   "scripts": {
-    "kek": "tsc -p ./ && node out/index.js",
     "compile-tsc": "tsc -p ./",
     "build": "npm run compile-tsc && gulp build",
     "prettier": "prettier --config .prettierrc.json --write src/**/*.ts",

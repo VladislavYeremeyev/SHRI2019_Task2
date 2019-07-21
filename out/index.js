@@ -70,112 +70,6 @@ const validateObject = (obj) => {
     }
     return [];
 };
-// const json = `{
-//   "block":"tree",
-//   "content":[
-//   {"block":"text", "mods":{"type":"h1"}},
-//   {"block":"branch1",
-//     "content":[
-//       {"block":"text", "mods":{"type":"h2"}},
-//       {"block":"text","mods":{"type":"h3"}},
-//       {"block":"wrapper","content":{"block":"text","mods":{"type":"h3"}}}
-//     ]
-//   },
-//   {"block":"branch2",
-//     "content":[
-//       {"block":"wrapper","content":[{"block":"text","mods":{"type":"h3"}}, {"block":"text","mods":{"type":"h1"}}]},
-//       {"block":"text","mods":{"type":"h2"}},
-//       {"block":"text","mods":{"type":"h3"}}
-//     ]
-//   }
-//   ]
-// }`;
-const json = `
-  [
-    {
-      "block": "mock",
-      "content": {
-        "block": "mock",
-        "content": {
-          "block": "mock",
-          "content": {
-            "block": "text",
-            "mods": { "type": "h1" }
-          }
-        }
-      }
-    },
-    {
-      "block": "mock",
-      "content": {
-        "block": "mock",
-        "contents": {
-          "block": "mock",
-          "content": [{
-            "block": "text",
-            "mods": { "type": "h3" }
-          },{
-            "block": "text",
-            "mods": { "type": "h1" }
-          }
-        ]
-        }
-      }
-    },
-    {
-      "block": "mock",
-      "content": {
-        "block": "mock",
-        "content": {
-          "block": "mock",
-          "content": {
-            "block": "text",
-            "mods": { "type": "h3" }
-          }
-        }
-      }
-    }
-  ]
-`;
-// const json = `{
-//   "block": "form",
-//   "content": [{
-//       "block": "form",
-//       "elem": "content",
-//       "mix": [{ "block": "form", "elem": "item", "mods": {  "space-h": "xl" } }, { "block": "form", "elem": "item", "mods": {  "space-v": "xxl" } }],
-//       "content": [
-//           {
-//               "block": "form",
-//               "elem":  "content-item",
-//               "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
-//               "content": { "block": "input", "mods": { "size": "l" } }
-//           },
-//           {
-//               "block": "form",
-//               "elem":  "content-item",
-//               "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
-//               "content": { "block": "input", "mods": { "size": "l" } }
-//           },
-//           {
-//               "block": "form",
-//               "elem":  "content-item",
-//               "content": { "block": "input", "mods": { "size": "l" } }
-//           }
-//       ]
-//   },
-//   {
-//     "block": "form",
-//     "elem": "content",
-//     "mix": [{ "block": "form", "elem": "item", "mods": {  "space-h": "xl" } }, { "block": "form", "elem": "item", "mods": {  "space-v": "xxl" } }],
-//     "content": [
-//         {
-//             "block": "form",
-//             "elem":  "content-item",
-//             "content": { "block": "input", "mods": { "size": "l" } }
-//         }
-//     ]
-//   }]
-// }`;
 function lint(jsonString) {
     return makeLint(jsonString, validateObject);
 }
@@ -183,5 +77,4 @@ const globalScope = (typeof window !== "undefined"
     ? window
     : false || global);
 globalScope.lint = lint;
-console.log(lint(json));
 //# sourceMappingURL=index.js.map

@@ -1,5 +1,5 @@
 import jsonToAst = require("json-to-ast");
-import { ILinterProblem, ITextHeadersResult, RuleKeys } from "./types";
+import { ITextHeadersResult } from "./types";
 import { getLinterErrorData, getModValue, isBlock } from "./utils";
 
 export function checkTextHeaderRules(
@@ -17,7 +17,6 @@ export function checkTextHeaderRules(
 
   switch (content.type) {
     case "Array":
-      // const initialMaxValue = maxAvailableHeaderLevel;
       content.children.forEach((elem: jsonToAst.AstJsonEntity) => {
         if (elem.type === "Object") {
           if (isBlock(elem, "text")) {
@@ -37,7 +36,9 @@ export function checkTextHeaderRules(
                     }
                   }
                   if (result.h1Flag) {
-                    result.headerErrors.push(getLinterErrorData("TextSeveralH1", elem.loc));
+                    result.headerErrors.push(
+                      getLinterErrorData("TextSeveralH1", elem.loc)
+                    );
                   } else {
                     result.h1Flag = true;
                   }
@@ -78,7 +79,10 @@ export function checkTextHeaderRules(
               result.maxLevelValue
             );
 
-            result.headerErrors = [...result.headerErrors, ...data.headerErrors];
+            result.headerErrors = [
+              ...result.headerErrors,
+              ...data.headerErrors,
+            ];
 
             result.maxLevelValue = data.maxLevelValue;
             result.previousElement = data.previousElement;
@@ -105,7 +109,9 @@ export function checkTextHeaderRules(
                 }
               }
               if (result.h1Flag) {
-                result.headerErrors.push(getLinterErrorData("TextSeveralH1", content.loc));
+                result.headerErrors.push(
+                  getLinterErrorData("TextSeveralH1", content.loc)
+                );
               } else {
                 result.h1Flag = true;
               }
