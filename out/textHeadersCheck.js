@@ -2,14 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const utils_1 = require("./utils");
 function checkTextHeaderRules(content, prevElement, isH1Found, maxAvailableHeaderLevel) {
-    let errors = [];
-    let h1Found = isH1Found;
-    let maxLevel = maxAvailableHeaderLevel;
-    let prevElem = prevElement;
+    const result = {
+        h1Flag: isH1Found,
+        headerErrors: [],
+        maxLevelValue: maxAvailableHeaderLevel,
+        previousElement: prevElement,
+    };
     switch (content.type) {
         case "Array":
-            const initialMaxValue = maxAvailableHeaderLevel;
-            console.log("init val", initialMaxValue);
+            // const initialMaxValue = maxAvailableHeaderLevel;
             content.children.forEach((elem) => {
                 if (elem.type === "Object") {
                     if (utils_1.isBlock(elem, "text")) {
@@ -18,46 +19,44 @@ function checkTextHeaderRules(content, prevElement, isH1Found, maxAvailableHeade
                             const modValue = utils_1.getModValue(mods.value, "type");
                             switch (modValue) {
                                 case "h1":
-                                    if (maxLevel > 1) {
-                                        if (typeof prevElem !== "undefined") {
-                                            errors.push(utils_1.getLinterErrorData(`TextInvalidH${maxLevel}Position`, prevElem.loc));
+                                    if (result.maxLevelValue > 1) {
+                                        if (typeof result.previousElement !== "undefined") {
+                                            result.headerErrors.push(utils_1.getLinterErrorData(`TextInvalidH${result.maxLevelValue}Position`, result.previousElement.loc));
                                         }
                                     }
-                                    if (h1Found) {
-                                        errors.push(utils_1.getLinterErrorData("TextSeveralH1", elem.loc));
+                                    if (result.h1Flag) {
+                                        result.headerErrors.push(utils_1.getLinterErrorData("TextSeveralH1", elem.loc));
                                     }
                                     else {
-                                        h1Found = true;
+                                        result.h1Flag = true;
                                     }
-                                    prevElem = elem;
+                                    result.previousElement = elem;
                                     break;
                                 case "h2":
-                                    if (maxLevel > 2) {
-                                        if (typeof prevElem !== "undefined") {
-                                            errors.push(utils_1.getLinterErrorData(`TextInvalidH${maxLevel}Position`, prevElem.loc));
+                                    if (result.maxLevelValue > 2) {
+                                        if (typeof result.previousElement !== "undefined") {
+                                            result.headerErrors.push(utils_1.getLinterErrorData(`TextInvalidH${result.maxLevelValue}Position`, result.previousElement.loc));
                                         }
                                     }
-                                    maxLevel = 2;
-                                    prevElem = elem;
+                                    result.maxLevelValue = 2;
+                                    result.previousElement = elem;
                                     break;
                                 case "h3":
-                                    maxLevel = 3;
-                                    prevElem = elem;
+                                    result.maxLevelValue = 3;
+                                    result.previousElement = elem;
                                     break;
                                 default:
                                     break;
                             }
                         }
                     }
-                    else {
-                        maxLevel = initialMaxValue;
-                    }
                     const innerContent = elem.children.find((p) => p.key.value === "content");
                     if (typeof innerContent !== "undefined") {
-                        const { headerErrors, maxLevelValue, previousElement, } = checkTextHeaderRules(innerContent.value, elem, h1Found, maxLevel);
-                        errors = [...errors, ...headerErrors];
-                        maxLevel = maxLevelValue;
-                        prevElem = previousElement;
+                        const data = checkTextHeaderRules(innerContent.value, elem, result.h1Flag, result.maxLevelValue);
+                        result.headerErrors = [...result.headerErrors, ...data.headerErrors];
+                        result.maxLevelValue = data.maxLevelValue;
+                        result.previousElement = data.previousElement;
+                        result.h1Flag = data.h1Flag;
                     }
                 }
             });
@@ -69,30 +68,31 @@ function checkTextHeaderRules(content, prevElement, isH1Found, maxAvailableHeade
                     const modValue = utils_1.getModValue(mods.value, "type");
                     switch (modValue) {
                         case "h1":
-                            if (maxLevel > 1) {
-                                if (typeof prevElem !== "undefined") {
-                                    errors.push(utils_1.getLinterErrorData(`TextInvalidH${maxLevel}Position`, prevElem.loc));
+                            if (result.maxLevelValue > 1) {
+                                if (typeof result.previousElement !== "undefined") {
+                                    result.headerErrors.push(utils_1.getLinterErrorData(`TextInvalidH${result.maxLevelValue}Position`, result.previousElement.loc));
                                 }
                             }
-                            if (h1Found) {
-                                errors.push(utils_1.getLinterErrorData("TextSeveralH1", content.loc));
+                            if (result.h1Flag) {
+                                result.headerErrors.push(utils_1.getLinterErrorData("TextSeveralH1", content.loc));
                             }
                             else {
-                                h1Found = true;
+                                result.h1Flag = true;
                             }
+                            result.previousElement = content;
                             break;
                         case "h2":
-                            if (maxLevel > 2) {
-                                if (typeof prevElem !== "undefined") {
-                                    errors.push(utils_1.getLinterErrorData(`TextInvalidH${maxLevel}Position`, prevElem.loc));
+                            if (result.maxLevelValue > 2) {
+                                if (typeof result.previousElement !== "undefined") {
+                                    result.headerErrors.push(utils_1.getLinterErrorData(`TextInvalidH${result.maxLevelValue}Position`, result.previousElement.loc));
                                 }
                             }
-                            maxLevel = 2;
-                            prevElem = content;
+                            result.maxLevelValue = 2;
+                            result.previousElement = content;
                             break;
                         case "h3":
-                            maxLevel = 3;
-                            prevElem = content;
+                            result.maxLevelValue = 3;
+                            result.previousElement = content;
                             break;
                         default:
                             break;
@@ -101,20 +101,17 @@ function checkTextHeaderRules(content, prevElement, isH1Found, maxAvailableHeade
             }
             const innerContent = content.children.find((p) => p.key.value === "content");
             if (typeof innerContent !== "undefined") {
-                const { headerErrors, maxLevelValue, previousElement, } = checkTextHeaderRules(innerContent.value, prevElem, h1Found, maxLevel);
-                errors = [...errors, ...headerErrors];
-                maxLevel = maxLevelValue;
-                prevElem = previousElement;
+                const data = checkTextHeaderRules(innerContent.value, content, result.h1Flag, result.maxLevelValue);
+                result.headerErrors = [...result.headerErrors, ...data.headerErrors];
+                result.maxLevelValue = data.maxLevelValue;
+                result.previousElement = data.previousElement;
+                result.h1Flag = data.h1Flag;
             }
             break;
         default:
             break;
     }
-    return {
-        headerErrors: errors,
-        maxLevelValue: maxLevel,
-        previousElement: prevElem,
-    };
+    return result;
 }
 exports.checkTextHeaderRules = checkTextHeaderRules;
 //# sourceMappingURL=textHeadersCheck.js.map

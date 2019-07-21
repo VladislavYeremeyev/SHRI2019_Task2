@@ -41,6 +41,13 @@ export interface IResult {
   newReferenceSize: string | undefined;
 }
 
+export interface ITextHeadersResult {
+  headerErrors: ILinterProblem<RuleKeys>[];
+  maxLevelValue: number;
+  previousElement: JsonToAst.AstObject | undefined;
+  h1Flag: boolean;
+}
+
 export const textSizeValues = ["s", "m", "l", "xl", "xxl"];
 export const spaceValues = [
   "xxxs",
