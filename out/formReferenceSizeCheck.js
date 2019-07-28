@@ -2,6 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const types_1 = require("./types");
 const utils_1 = require("./utils");
+/**
+ * Функция, проверяющая корректность размера элемента, если он является кнопкой, инпутом или текстом в лейбле формы.
+ * @param formBlock — объект блока form
+ * @param elem - Проверяемый объект
+ * @param referenceSize - Эталонный размер
+ * @return Возвращает объект c найденными ошибками и вычисленным эталонным размером
+ */
 const getSizeEqualData = (formBlock, elem, referenceSize) => {
     const result = {
         errors: [],
@@ -54,6 +61,14 @@ const getSizeEqualData = (formBlock, elem, referenceSize) => {
     }
     return result;
 };
+/**
+ * Рекурсивная функция, проверяющая корректность правил размеров элементов формы.
+ * @param formBlock — объект блока form
+ * @param formContent - Проверяемая сущность
+ * @param refSize - Эталонный размер
+ * @param maxAvailableHeaderLevel - Максимально возможный уровень последующего заголовка (H3 > H2 > H1),
+ * @return Возвращает объект c найденными ошибками и вычисленным эталонным размером
+ */
 function checkFormContentSize(formBlock, formContent, refSize) {
     let referenceSize = refSize;
     let errors = [];

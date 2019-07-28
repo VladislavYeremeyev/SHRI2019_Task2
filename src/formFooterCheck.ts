@@ -7,6 +7,12 @@ import {
   getModsError,
 } from "./utils";
 
+/**
+ * Проверяет и возвращает ошибки, связанные с правилами проверки оступов элементов footer.
+ * @param footer — объект c элементом footer
+ * @param referenceSize - Эталонный размер, вычисленный внутри данной формы
+ * @return Возвращает массив ошибок, нарушающих правила
+ */
 function checkFooterSpaceRules(
   footer: jsonToAst.AstObject,
   referenceSize: string
@@ -46,6 +52,12 @@ function checkFooterSpaceRules(
   return errors;
 }
 
+/**
+ * Проверяет и возвращает ошибки, связанные с правилами проверки размеров текста внутри элементов footer.
+ * @param footer — объект c элементом footer
+ * @param referenceSize - Эталонный размер, вычисленный внутри данной формы
+ * @return Возвращает массив ошибок, нарушающих правила
+ */
 function checkFooterTextRule(
   footer: jsonToAst.AstObject,
   referenceSize: string
@@ -72,6 +84,12 @@ function checkFooterTextRule(
   return errors;
 }
 
+/**
+ * Проверяет и возвращает ошибки, связанные с правилами проверки footer.
+ * @param formContent — содержимое формы
+ * @param referenceSize - Эталонный размер, вычисленный внутри данной формы
+ * @return Возвращает массив ошибок, нарушающих правила
+ */
 export function checkFooterRules(
   formContent: jsonToAst.AstJsonEntity,
   referenceSize: string

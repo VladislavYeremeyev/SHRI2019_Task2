@@ -2,6 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const types_1 = require("./types");
 const utils_1 = require("./utils");
+/**
+ * Проверяет и возвращает ошибки, связанные с правилами проверки оступов элементов footer.
+ * @param footer — объект c элементом footer
+ * @param referenceSize - Эталонный размер, вычисленный внутри данной формы
+ * @return Возвращает массив ошибок, нарушающих правила
+ */
 function checkFooterSpaceRules(footer, referenceSize) {
     const errors = [];
     ["space-v", "space-h"].forEach((mod) => {
@@ -21,6 +27,12 @@ function checkFooterSpaceRules(footer, referenceSize) {
     });
     return errors;
 }
+/**
+ * Проверяет и возвращает ошибки, связанные с правилами проверки размеров текста внутри элементов footer.
+ * @param footer — объект c элементом footer
+ * @param referenceSize - Эталонный размер, вычисленный внутри данной формы
+ * @return Возвращает массив ошибок, нарушающих правила
+ */
 function checkFooterTextRule(footer, referenceSize) {
     const errors = [];
     const content = footer.children.find((p) => p.key.value === "content");
@@ -34,6 +46,12 @@ function checkFooterTextRule(footer, referenceSize) {
     }
     return errors;
 }
+/**
+ * Проверяет и возвращает ошибки, связанные с правилами проверки footer.
+ * @param formContent — содержимое формы
+ * @param referenceSize - Эталонный размер, вычисленный внутри данной формы
+ * @return Возвращает массив ошибок, нарушающих правила
+ */
 function checkFooterRules(formContent, referenceSize) {
     let errors = [];
     const headerElements = utils_1.getInnerEntities(formContent, "form", "footer");

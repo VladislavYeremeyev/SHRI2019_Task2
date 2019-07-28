@@ -1,3 +1,4 @@
+// Коды ошибок
 export enum RuleKeys {
   FormElementsSizeShouldBeEqual = "FORM.INPUT_AND_LABEL_SIZES_SHOULD_BE_EQUAL",
   FormContentVerticalSpaceIsInvalid = "FORM.CONTENT_VERTICAL_SPACE_IS_INVALID",
@@ -14,6 +15,7 @@ export enum RuleKeys {
   TextInvalidH3Position = "TEXT.INVALID_H3_POSITION",
 }
 
+// Текст ошибок
 export enum RuleErrorText {
   FormElementsSizeShouldBeEqual = "Инпуты, кнопки и подписи в форме должны быть одного размера",
   FormContentVerticalSpaceIsInvalid = "Вертикальный внутренний отступ элемента content должен задаваться с помощью микса на него элемента item со значением модификатора space-v на 2 шага больше эталонного размера",
@@ -30,17 +32,20 @@ export enum RuleErrorText {
   TextInvalidH3Position = "Заголовок третьего уровня не может следовать перед заголовком второго уровня на одном или более глубоком уровне вложенности",
 }
 
+// Интерфейс ошибки
 export interface ILinterProblem<TKey> {
   code: TKey;
   error: RuleErrorText;
   location: object;
 }
 
+// Интерфейс для поиска ошибок, нарушающих правила проверки размеров элементов формы
 export interface IResult {
   errors: ILinterProblem<RuleKeys>[];
   newReferenceSize: string | undefined;
 }
 
+// Интерфейс для поиска ошибок, нарушающих правила заголовка
 export interface ITextHeadersResult {
   headerErrors: ILinterProblem<RuleKeys>[];
   maxLevelValue: number;
@@ -48,6 +53,7 @@ export interface ITextHeadersResult {
   h1Flag: boolean;
 }
 
+// Константы с возможными значениями модификаторов
 export const textSizeValues = ["s", "m", "l", "xl", "xxl"];
 export const spaceValues = [
   "xxxs",

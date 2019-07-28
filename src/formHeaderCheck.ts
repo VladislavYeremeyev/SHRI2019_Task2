@@ -7,6 +7,12 @@ import {
   getModsError,
 } from "./utils";
 
+/**
+ * Проверяет и возвращает ошибки, связанные с правилами проверки размеров текста внутри элементов header.
+ * @param header — объект c элементом header
+ * @param referenceSize - Эталонный размер, вычисленный внутри данной формы
+ * @return Возвращает массив ошибок, нарушающих правила
+ */
 function checkHeaderTextRule(
   header: jsonToAst.AstObject,
   referenceSize: string
@@ -34,6 +40,12 @@ function checkHeaderTextRule(
   return errors;
 }
 
+/**
+ * Проверяет и возвращает ошибки, связанные с правилами проверки оступов элементов header.
+ * @param header — объект c элементом header
+ * @param referenceSize - Эталонный размер, вычисленный внутри данной формы
+ * @return Возвращает массив ошибок, нарушающих правила
+ */
 function checkHeaderSpaceRules(
   header: jsonToAst.AstObject,
   referenceSize: string
@@ -73,6 +85,12 @@ function checkHeaderSpaceRules(
   return errors;
 }
 
+/**
+ * Проверяет и возвращает ошибки, связанные с правилами проверки header.
+ * @param formContent — содержимое формы
+ * @param referenceSize - Эталонный размер, вычисленный внутри данной формы
+ * @return Возвращает массив ошибок, нарушающих правила
+ */
 export function checkHeaderRules(
   formContent: jsonToAst.AstJsonEntity,
   referenceSize: string

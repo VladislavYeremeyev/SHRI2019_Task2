@@ -8,6 +8,7 @@ import { checkTextHeaderRules } from "./textHeadersCheck";
 import { ILinterProblem, RuleKeys } from "./types";
 import { getLinterErrorData, isBlock } from "./utils";
 
+// Функция парсинга JSON-строки
 function parseJson(jsonString: string): jsonToAst.AstJsonEntity | undefined {
   try {
     return jsonToAst(jsonString);
@@ -16,6 +17,7 @@ function parseJson(jsonString: string): jsonToAst.AstJsonEntity | undefined {
   }
 }
 
+// Функция обхода дерева
 function walk(
   node: jsonToAst.AstJsonEntity,
   cbObj: (property: jsonToAst.AstObject) => void
@@ -36,6 +38,7 @@ function walk(
   }
 }
 
+// Функция, запускающая линтинг и возвращающая все ошибки
 function makeLint(
   jsonString: string,
   validateObjectFunction: (
@@ -62,6 +65,7 @@ function makeLint(
   return errors;
 }
 
+// Функция, валидирующая объект по заданным правилам
 const validateObject = (
   obj: jsonToAst.AstObject
 ): ILinterProblem<RuleKeys>[] => {
@@ -97,6 +101,7 @@ function lint(jsonString: string): ILinterProblem<RuleKeys>[] | [] {
   return makeLint(jsonString, validateObject);
 }
 
+// сделать функцию доступной в глобальной области видимости в NodeJS и браузере (требуется по условию)
 const globalScope = (typeof window !== "undefined"
   ? window
   : false || global) as any;

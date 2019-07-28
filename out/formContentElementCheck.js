@@ -2,6 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const types_1 = require("./types");
 const utils_1 = require("./utils");
+/**
+ * Проверяет и возвращает ошибки, связанные с правилами проверки элементов form__content.
+ * @param formContent — содержимое блока формы
+ * @param referenceSize - Эталонный размер, вычисленный внутри данной формы
+ * @return Возвращает массив ошибок, нарушающих правила
+ */
 function checkContentElementRules(formContent, referenceSize) {
     const errors = [];
     const contentElements = utils_1.getInnerEntities(formContent, "form", "content");

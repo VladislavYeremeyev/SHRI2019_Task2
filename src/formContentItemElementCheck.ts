@@ -7,6 +7,12 @@ import {
   getModsError,
 } from "./utils";
 
+/**
+ * Проверяет и возвращает ошибки, связанные с правилами проверки элементов form__content-item.
+ * @param formContent — содержимое блока формы
+ * @param referenceSize - Эталонный размер, вычисленный внутри данной формы
+ * @return Возвращает массив ошибок, нарушающих правила
+ */
 export function checkContentItemElementRules(
   formContent: jsonToAst.AstJsonEntity,
   referenceSize: string

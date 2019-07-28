@@ -8,6 +8,7 @@ const formHeaderCheck_1 = require("./formHeaderCheck");
 const formReferenceSizeCheck_1 = require("./formReferenceSizeCheck");
 const textHeadersCheck_1 = require("./textHeadersCheck");
 const utils_1 = require("./utils");
+// Функция парсинга JSON-строки
 function parseJson(jsonString) {
     try {
         return jsonToAst(jsonString);
@@ -16,6 +17,7 @@ function parseJson(jsonString) {
         return undefined;
     }
 }
+// Функция обхода дерева
 function walk(node, cbObj) {
     switch (node.type) {
         case "Object":
@@ -29,6 +31,7 @@ function walk(node, cbObj) {
             break;
     }
 }
+// Функция, запускающая линтинг и возвращающая все ошибки
 function makeLint(jsonString, validateObjectFunction) {
     let errors = [];
     const ast = parseJson(jsonString);
@@ -47,6 +50,7 @@ function makeLint(jsonString, validateObjectFunction) {
     }
     return errors;
 }
+// Функция, валидирующая объект по заданным правилам
 const validateObject = (obj) => {
     if (utils_1.isBlock(obj, "form")) {
         const formContent = obj.children.find((p) => p.key.value === "content");
@@ -73,6 +77,7 @@ const validateObject = (obj) => {
 function lint(jsonString) {
     return makeLint(jsonString, validateObject);
 }
+// сделать функцию доступной в глобальной области видимости в NodeJS и браузере (требуется по условию)
 const globalScope = (typeof window !== "undefined"
     ? window
     : false || global);

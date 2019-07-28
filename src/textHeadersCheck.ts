@@ -2,6 +2,16 @@ import jsonToAst = require("json-to-ast");
 import { ITextHeadersResult } from "./types";
 import { getLinterErrorData, getModValue, isBlock } from "./utils";
 
+/**
+ * Рекурсивная функция, проверяющая корректность правил заголовков.
+ * @param content — проверяемая сущность
+ * @param prevElement - Предыдущий найденный заголовок
+ * @param isH1Found - Флаг нахождения h1 заголовка
+ * @param maxAvailableHeaderLevel - Максимально возможный уровень последующего заголовка (H3 > H2 > H1),
+ * не приводящий к ошибке линтера. Например, если найден H3, то данная переменная принимает значение 3, что означает,
+ * что последующие заголовки в этой ветке не могут быть H1 и H2
+ * @return Возвращает объект интерфейса ITextHeadersResult
+ */
 export function checkTextHeaderRules(
   content: jsonToAst.AstJsonEntity,
   prevElement: jsonToAst.AstObject | undefined,

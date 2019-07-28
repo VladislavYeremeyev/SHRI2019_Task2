@@ -9,6 +9,13 @@ import {
   isElement,
 } from "./utils";
 
+/**
+ * Функция, проверяющая корректность размера элемента, если он является кнопкой, инпутом или текстом в лейбле формы.
+ * @param formBlock — объект блока form
+ * @param elem - Проверяемый объект
+ * @param referenceSize - Эталонный размер
+ * @return Возвращает объект c найденными ошибками и вычисленным эталонным размером
+ */
 const getSizeEqualData = (
   formBlock: jsonToAst.AstObject,
   elem: jsonToAst.AstObject,
@@ -94,6 +101,14 @@ const getSizeEqualData = (
   return result;
 };
 
+/**
+ * Рекурсивная функция, проверяющая корректность правил размеров элементов формы.
+ * @param formBlock — объект блока form
+ * @param formContent - Проверяемая сущность
+ * @param refSize - Эталонный размер
+ * @param maxAvailableHeaderLevel - Максимально возможный уровень последующего заголовка (H3 > H2 > H1),
+ * @return Возвращает объект c найденными ошибками и вычисленным эталонным размером
+ */
 export function checkFormContentSize(
   formBlock: jsonToAst.AstObject,
   formContent: jsonToAst.AstJsonEntity,

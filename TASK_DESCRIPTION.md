@@ -146,7 +146,6 @@ const json = `{
                     "block": "form",
                     "elem":  "content-item",
                     "mix": [{ "block": "form", "elem": "item", "mods": { "indent-b": "xl" } }],
-                    "mods": { "indent-b": "xl" },
                     "content": { "block": "input", "mods": { "size": "l" } }
                 },
                 // неправильно

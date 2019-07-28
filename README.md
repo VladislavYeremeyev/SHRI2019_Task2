@@ -47,3 +47,7 @@
 ## Линтер в действии
 
 Работу линтера можно посмотреть в третьем задании в ветке [custom-linter](https://github.com/VladislavYeremeyev/SHRI2019_Task3/tree/custom-linter#5-%D0%B4%D0%BE%D0%BF%D0%BE%D0%BB%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D0%BE).
+
+## Тесты
+
+Для тестов использовал `mocha` + `chai`. Для запуска: `npm run test`.

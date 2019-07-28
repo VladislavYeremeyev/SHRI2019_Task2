@@ -1,6 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const types_1 = require("./types");
+/**
+ * Возвращает объект ошибки линтера в необходимом виде
+ * @param errorCode — Код ошибки
+ * @param locationObject - Объект, описывающий локацию ошибочного элемента в JsonToAst интерфейсе
+ * @return {object} Объект ошибки линтера, представленный в требуемом по заданию виде
+ */
 function getLinterErrorData(errorCode, locationObject) {
     const location = {
         end: {
@@ -19,22 +25,43 @@ function getLinterErrorData(errorCode, locationObject) {
     };
 }
 exports.getLinterErrorData = getLinterErrorData;
+/**
+ * Проверяет, является ли объект определенным блоком
+ * @param elem — Проверяемый объект
+ * @param blockName - Строка с названием блока
+ * @return {boolean}
+ */
 exports.isBlock = (elem, blockName) => elem.children.some((p) => p.key.value === "block" &&
     (p.value.type === "Literal" && p.value.value === blockName)) && !elem.children.some((p) => p.key.value === "elem")
     ? true
     : false;
+/**
+ * Проверяет, является ли объект определенным элементом
+ * @param elem — Проверяемый объект
+ * @param blockName - Строка с названием блока
+ * @param elementName - Строка с названием элемента
+ * @return {boolean}
+ */
 exports.isElement = (elem, blockName, elementName) => elem.children.some((p) => p.key.value === "elem" &&
     (p.value.type === "Literal" && p.value.value === elementName)) &&
     elem.children.some((p) => p.key.value === "block" &&
         (p.value.type === "Literal" && p.value.value === blockName))
     ? true
     : false;
+/**
+ * Возвращает объект в массиве mix данного элемента по заданным параметрам. Если такого объекта не существует, возвращает undefined.
+ * @param elem — Обрабатываемый объект
+ * @param blockName - Строка с названием блока, который должен быть в mix
+ * @param elementName - Строка с названием элемента, который должен быть в mix (optional)
+ * @param mods - Массив строк - модификаторов, которые должны быть у искомого объекта в mix (optional)
+ * @return При соответствии параметрам возвращается найденный объект внутри массива mix, иначе возвращается undefined
+ */
 exports.getMixedObject = (elem, blockName, elementName, mods) => {
     let result;
     const mixProperty = elem.children.find((p) => p.key.value === "mix");
     if (typeof mixProperty !== "undefined" &&
         mixProperty.value.type === "Array") {
-        mixProperty.value.children.find((mix) => {
+        mixProperty.value.children.forEach((mix) => {
             if (mix.type === "Object") {
                 if (typeof elementName === "undefined") {
                     if (exports.isBlock(mix, blockName)) {
@@ -44,7 +71,7 @@ exports.getMixedObject = (elem, blockName, elementName, mods) => {
                         else {
                             const modsObj = mix.children.find((p) => p.key.value === "mods");
                             if (typeof modsObj !== "undefined") {
-                                if (mods.every((mod) => exports.getModValue(modsObj.value, mod))) {
+                                if (mods.every((mod) => typeof exports.getModValue(modsObj.value, mod) !== "undefined")) {
                                     result = mix;
                                 }
                             }
@@ -59,7 +86,7 @@ exports.getMixedObject = (elem, blockName, elementName, mods) => {
                         else {
                             const modsObj = mix.children.find((p) => p.key.value === "mods");
                             if (typeof modsObj !== "undefined") {
-                                if (mods.every((mod) => exports.getModValue(modsObj.value, mod))) {
+                                if (mods.every((mod) => typeof exports.getModValue(modsObj.value, mod) !== "undefined")) {
                                     result = mix;
                                 }
                             }
@@ -71,6 +98,12 @@ exports.getMixedObject = (elem, blockName, elementName, mods) => {
     }
     return result;
 };
+/**
+ * Возвращает значение модификатора по заданному имени.
+ * @param modsObj — Объект модификаторов
+ * @param modName - Строка с названием модификатора
+ * @return При соответствии параметрам возвращается найденное значение модификатора, иначе возвращается undefined
+ */
 exports.getModValue = (modsObj, modName) => {
     let result;
     if (modsObj.type === "Object") {
@@ -82,6 +115,18 @@ exports.getModValue = (modsObj, modName) => {
     }
     return result;
 };
+/**
+ * Возвращает объект с текущим эталонным размером и объект элемента, в котором присутствует ошибка в модификаторе,
+ * если проверяемый объект является таковым
+ * @param elem — Проверяемый объект
+ * @param modName - Строка с названием модификатора
+ * @param referenceValue - Найденное на текущий момент эталонное значение
+ * @param expectedValues - Массив строк с доступными значениями модификатора
+ * @param referenceValueOffset - Число ожидаемого отступа от эталонного значения (например, при эталоне l,
+ * отступ со значением 2, будет ожидать значение - xxl). По умолчанию равен 0
+ * @return Возвращает объект, содержащий найденный на текущий момент эталонный размер (string | undefined) и элемент проверки,
+ * если значение его модификаторов нарушают правила
+ */
 exports.getModsError = (elem, modName, referenceValue, expectedValues, referenceValueOffset) => {
     let modErrorObject;
     let newReferenceValue = referenceValue;
@@ -112,6 +157,14 @@ exports.getModsError = (elem, modName, referenceValue, expectedValues, reference
     }
     return { newReferenceValue, modErrorObject };
 };
+/**
+ * Возвращает массив объектов, соответсвующих критерию поиска по имени блока и элемента на любом уровне вложенности внутри данного элемента.
+ * @param elem — Объект, внутри которого нужно провести поиск элементов
+ * @param blockName - Строка с именем блока
+ * @param elementName - Строка с именем элемента (optional)
+ * @param level - Уровень вложенности, на котором проводится поиск (Если === 1, то совершит обход только потомков 1-го уровня)
+ * @return Возвращает массив найденных элементов
+ */
 exports.getInnerEntities = (elem, blockName, elementName, level) => {
     let innerTextBlocks = [];
     switch (elem.type) {
